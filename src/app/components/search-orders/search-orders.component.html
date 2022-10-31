@@ -1,0 +1,14 @@
+<form #searchForm = "ngForm" class="search modal-content">
+
+    <div class="container">
+        <label for="customerId"><b>Customer Id</b></label>
+        <input type="text" placeholder="Enter Customer Id" name="customerId"  [(ngModel)]="customerId"  required>
+
+        <label for="orderId"><b>Order Id</b></label>
+        <input type="text" placeholder="Enter Order id" name="orderId" [(ngModel)]="orderId" required>
+            
+        <button class="btn btn-primary" type="button" (click) = "fetchOrder()">Fetch Order</button>
+    </div>
+</form>
+
+<simple-notifications></simple-notifications>

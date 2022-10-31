@@ -18,7 +18,8 @@ export class DealerLoginComponent implements OnInit {
     const observable = this.loginService.login(this.user);
     observable.subscribe(
       (response : any) => {
-        sessionStorage.setItem("user", JSON.stringify(response.responseBody));
+        sessionStorage.setItem("user", JSON.stringify(response));
+        this.router.navigate(['orderDashboard']);
         this.notification.success("Login Success");
       },(error) => {
         this.notification.error(error);

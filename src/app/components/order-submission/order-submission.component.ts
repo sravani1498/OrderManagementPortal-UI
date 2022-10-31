@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { OrdersaveService } from 'src/app/services/ordersave.service';
 import { Observable, ReplaySubject, Subscription } from 'rxjs';  
+import { NavigationExtras, Router } from '@angular/router';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-order-submission',
@@ -13,8 +15,26 @@ export class OrderSubmissionComponent implements OnInit {
   onFileSelected(event : any) {
     this.convertFile(event.target.files[0]).subscribe((base64: string | undefined) => {
       this.base64Output = base64;
-      console.log(base64);
+      this.uploadFile();
     });
+  }
+
+  uploadFile() {
+    const observable = this.orderService.uploadFile(this.base64Output) ;
+      observable.subscribe(
+        (response : any) => {
+          let navigationExtras: NavigationExtras = {
+            state: {
+              ordersList: response.responseBody
+            }
+          };
+          this.router.navigate(['orderDashboard'], navigationExtras);
+          this.notification.success("File upload Success");
+        },(error) => {
+          this.notification.error(error);
+        }
+      )
+    
   }
 
   convertFile(file : File) : Observable<string> {
@@ -24,6 +44,11 @@ export class OrderSubmissionComponent implements OnInit {
     reader.onload = (event:any) => result.next(btoa(event.target.result.toString()));
     return result;
   }
+
+  constructor(private  orderService: OrdersaveService,
+    private router: Router, private notification : NotificationsService
+    ) { }
+
   
   ngOnInit(): void {
   }
