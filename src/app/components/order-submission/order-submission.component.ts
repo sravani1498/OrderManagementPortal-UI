@@ -10,22 +10,22 @@ import { NotificationsService } from 'angular2-notifications';
   styleUrls: ['./order-submission.component.css']
 })
 export class OrderSubmissionComponent implements OnInit {
-  base64Output : string | undefined;
+  fileContent : string | undefined;
 
   onFileSelected(event : any) {
     this.convertFile(event.target.files[0]).subscribe((base64: string | undefined) => {
-      this.base64Output = base64;
+      this.fileContent = base64;
       this.uploadFile();
     });
   }
 
   uploadFile() {
-    const observable = this.orderService.uploadFile(this.base64Output) ;
+    const observable = this.orderService.uploadFile(this.fileContent) ;
       observable.subscribe(
         (response : any) => {
           let navigationExtras: NavigationExtras = {
             state: {
-              ordersList: response.responseBody
+              ordersList: response
             }
           };
           this.router.navigate(['orderDashboard'], navigationExtras);

@@ -14,6 +14,7 @@ import { OrderListComponent } from './components/order-list/order-list.component
 import { Route, RouterModule } from '@angular/router';
 import { OrderDashboardComponent } from './components/order-dashboard/order-dashboard.component';
 import { SearchOrdersComponent } from './components/search-orders/search-orders.component';
+import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Route[] = [
   {
@@ -23,16 +24,19 @@ const routes: Route[] = [
     path: '', component: DealerLoginComponent,
   },
   {
-    path: 'orderUpload', component: OrderSubmissionComponent
+    path: 'orderUpload', component: OrderSubmissionComponent, canActivate: [AuthGuardService]
   },
   {
-    path: 'orderList', component: OrderListComponent
+    path: 'orderList', component: OrderListComponent,  canActivate: [AuthGuardService]
   },
   {
-    path: 'orderDashboard', component: OrderDashboardComponent
+    path: 'orderDashboard', canActivate: [AuthGuardService], component: OrderDashboardComponent
   }, 
   {
-    path: 'fetchOrder', component: SearchOrdersComponent
+    path: 'fetchOrder', canActivate: [AuthGuardService], component: SearchOrdersComponent
+  },
+  {
+    path: 'editOrder', canActivate: [AuthGuardService], component: OrderEditComponent
   }
 ]
 
@@ -55,7 +59,7 @@ const routes: Route[] = [
     RouterModule.forRoot(routes),
     SimpleNotificationsModule.forRoot({ timeOut: 3500})
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [AuthGuardService],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

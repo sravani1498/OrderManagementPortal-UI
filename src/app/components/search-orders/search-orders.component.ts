@@ -23,7 +23,7 @@ export class SearchOrdersComponent implements OnInit {
         (response: any) => {
         let navigationExtras: NavigationExtras = {
           state: {
-            ordersList: response.responseBody
+            ordersList: response
           }
         };
         this.router.navigate(['orderList'], navigationExtras);

@@ -10,17 +10,17 @@ export class OrdersaveService {
   user = JSON.parse(sessionStorage.getItem("user") || '{}')
 
 
-  uploadFile(base64 : string | undefined ){
+  uploadFile(fileContent : string | undefined ){
     const fileInput = {
-      base64: base64,
+      fileContent: fileContent,
       dealerId : this.user.dealerId
     }
     return this.http.post(this.BASE_URL+'/ordersave', fileInput).pipe(catchError(this.errorHandler));
   }
 
-  // listOrders() {
-  //   return this.http.post()
-  // }
+  editOrder(order: any) {
+    return this.http.put(this.BASE_URL + '/orderUpdate', order).pipe(catchError(this.errorHandler));
+  }
 
   fetchOrders(customerId : string , orderId : string, showAll : Boolean) {
     const orderInput = {

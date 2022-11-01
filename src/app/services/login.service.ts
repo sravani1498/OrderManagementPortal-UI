@@ -17,5 +17,13 @@ export class LoginService {
     return throwError(error.error.message || 'server Error');
   }
 
+  isLoggedIn(): boolean {
+    let user = JSON.parse(sessionStorage.getItem("user") || '{}');
+    if(user != null ) {
+      return true;
+    }
+    return false;
+  }
+
   constructor(private http : HttpClient) { }
 }

@@ -10,6 +10,7 @@ import { OrdersaveService } from 'src/app/services/ordersave.service';
 })
 export class OrderDashboardComponent implements OnInit {
   ordersList : Array <any> = [];
+  isLoggedIn = false;
 
   constructor(private router : Router, private service :OrdersaveService, private notification : NotificationsService) {
     if(history.state.ordersList){
@@ -32,7 +33,7 @@ export class OrderDashboardComponent implements OnInit {
         (response: any) => {
         let navigationExtras: NavigationExtras = {
           state: {
-            ordersList: response.responseBody
+            ordersList: response
           }
         };
         this.router.navigate(['orderList'], navigationExtras);
@@ -42,7 +43,12 @@ export class OrderDashboardComponent implements OnInit {
     )
   }
   edit(order: any){
-
+    let navigationExtras: NavigationExtras = {
+      state: {
+        order: order
+      }
+    };
+    this.router.navigate(['editOrder'], navigationExtras);
   }
 
   ngOnInit(): void {
