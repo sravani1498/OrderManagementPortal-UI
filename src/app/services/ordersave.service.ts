@@ -19,7 +19,7 @@ export class OrdersaveService {
   }
 
   editOrder(order: any) {
-    return this.http.put(this.BASE_URL + '/orderUpdate', order).pipe(catchError(this.errorHandler));
+    return this.http.put(this.BASE_URL + '/orderupdate', order).pipe(catchError(this.errorHandler));
   }
 
   fetchOrders(customerId : string , orderId : string, showAll : Boolean) {

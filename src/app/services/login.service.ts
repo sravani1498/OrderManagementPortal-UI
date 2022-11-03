@@ -11,10 +11,12 @@ export class LoginService {
 
 
   login(user : {username : string , password: string}){
-    return this.http.post(this.BASE_URL+'/dealer', user).pipe(catchError(this.errorHandler));;
+    return this.http.post(this.BASE_URL+'/dealer', user).pipe(
+      catchError(this.errorHandler)
+      );
   }
-  errorHandler(error: HttpErrorResponse) {
-    return throwError(error.error.message || 'server Error');
+  errorHandler(error: any) {
+    return throwError(error.error.errorMessage || 'server Error');
   }
 
   isLoggedIn(): boolean {
